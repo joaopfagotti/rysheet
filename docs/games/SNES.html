@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Rysheet Depository - preserving the past for the future.">
+  <meta name="author" content="Rysheet">
+  <title>Rysheet Depository - [Console Name]</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="/../images/logo.png" type="image/x-icon">
+  <!-- Bootstrap CSS se necessário -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <style>
+    /* Estilos Gerais */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow-x: hidden; }
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: linear-gradient(to bottom, #0b0f1a, #1a1a2e);
+      color: #cdd8e4;
+      display: flex; flex-direction: column;
+    }
+    a { text-decoration: none; color: #cdd8e4; transition: color 0.3s; }
+    a:hover { color: #ff00ff; }
+    
+    header {
+      background: #102233 url('https://www.transparenttextures.com/patterns/small-grid.png') repeat;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 4px double #ff00ff;
+      box-shadow: 0 0 12px #00ffff;
+      background-image: url(images/wallpaper.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    header h1 { font-size: 2.5rem; color: #00ffff; text-shadow: 0 0 10px #ff00ff; }
+    header h2 { font-size: 1rem; color: #44ffff; margin-top: 5px; opacity: 0.8; text-shadow: 0 0 10px #ff00ff; }
+    
+    .navbar {
+      background: linear-gradient(45deg, #2b2d31, #1c3c5a);
+      padding: 10px; border-bottom: 3px groove #ff00ff;
+      box-shadow: inset 0 -3px 10px #000, 0 3px 5px #00ffff;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+    }
+    .navbar a {
+      padding: 6px 10px; font-size: 0.65rem;
+      background-color: #1a1a2e; border: 2px dashed #ff00ff;
+      box-shadow: 2px 2px 4px #00ffff; white-space: nowrap;
+    }
+    .navbar a:hover { color: #ff00ff; background-color: #00ffff; border: 2px dashed #00ffff; }
+    
+    .main-container {
+      flex: 1; display: flex; justify-content: center;
+      margin: 20px auto; padding: 0 10px;
+    }
+    
+    /* Inner container para o conteúdo central */
+    .inner-container {
+      position: relative; display: flex; flex-direction: column;
+      max-width: 980px; width: 100%; gap: 10px;
+      padding: 20px; background: transparent; z-index: 1;
+    }
+    .inner-container::before {
+      content: "";
+      position: absolute; top: 0; bottom: 0; left: -40px; right: -40px;
+      background: #2b2d31 url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      border: 3px ridge #ff00ff;
+      box-shadow: 0 0 15px rgba(0,191,255,0.5);
+      z-index: -1; border-radius: 4px;
+    }
+    
+    .center-column {
+      background: #1a1a2e; padding: 15px;
+      border: 3px inset #ff00ff; box-shadow: inset 0 0 10px #00ffff;
+    }
+    
+    h2.page-title {
+      font-size: 1.2rem; color: #ff00ff;
+      text-shadow: 0 0 5px #00ffff; margin-bottom: 12px;
+    }
+    
+    
+    footer {
+      text-align: center; background: #2b2d31; padding: 20px;
+      border-top: 4px double #ff00ff; box-shadow: 0 -3px 8px #00ffff;
+      font-size: 0.7rem; margin-top: auto;
+    }
+
+    .classified-title {
+      font-size: 1rem;
+      color: #00ffff;
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed #ff00ff;
+    }
+
+    .game-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .game-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #1a1a2e, #222237);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #00ffff55;
+      transition: transform 0.2s;
+    }
+
+    .game-title {
+      font-size: 0.7rem;
+      color: #ffffff;
+    }
+
+    .button-group a {
+      text-decoration: none;
+      font-size: 0.6rem;
+      padding: 8px 12px;
+      margin-left: 8px;
+      border-radius: 5px;
+      border: 2px solid #008cff;
+      background: linear-gradient(1deg, #1d3c92, #2ee0ff);
+      color: #000;
+      transition: 0.01s ease;
+    }
+
+    .button-group a:hover {
+      background-color: #297fff;
+      border-color: #7cdaff;
+      color: #fff;
+    }
+
+    .search-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 6px 20px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  background: linear-gradient(1deg, #49eaff, #4983ff);
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: #5c9eff;
+  box-shadow: 0 0 12px rgba(92, 158, 255, 0.6);
+  background: #45caff;
+}
+
+    
+    @media (max-width: 768px) {
+      .navbar a { margin: 0 5px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Rysheet Depository</h1>
+    <h2>preserving the past for the future</h2>
+  </header>
+  
+  <div class="navbar">
+    <a href="../index.htm">Home</a>
+    <a href="https://rysheet.blogspot.com/" target="_blank">Blogspot</a>
+    <a href="../about.htm">About Us</a>
+    <a href="../acervo.htm">Acervo</a>
+    <a href="../contact.htm">Contact</a>
+  </div>
+  
+  <div class="main-container">
+    <div class="inner-container">
+      <div class="center-column">
+        <h2 class="page-title">SNES - Acervo</h2>
+        <p>Esta página lista os jogos disponíveis para o console <strong>SNES</strong> diretamente a partir do Google Drive. Clique para baixar.</p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Digite aqui o nome do jogo" onkeyup="filtrarJogos()">
+          </div>
+          
+          <ul class="game-list">
+
+            <li class="game-item">
+              <span class="game-title">7th Saga, The (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1MqajIj0h929s0-TyfEJbistWZsAMvY0C" download>Download</a>
+                <a href="https://www.google.com/search?q=7th%20Saga%2C%20The%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">3 Ninjas Kick Back (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1jxnbkPqlfRB0KshnngSQiQH-QbB7ALMi" download>Download</a>
+                <a href="https://www.google.com/search?q=3%20Ninjas%20Kick%20Back%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">American Gladiators (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1HnspsGdmpPso9d-mE0622MNUdD1G9tly" download>Download</a>
+                <a href="https://www.google.com/search?q=American%20Gladiators%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Alien vs Predator (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1g-aWcDl3AUBj_FA5tSC_zG98WMbHBcjH" download>Download</a>
+                <a href="https://www.google.com/search?q=Alien%20vs%20Predator%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Alien 3 (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1_3AFEVDsLgUWy2Rax5NSkOKskCK4rTSQ" download>Download</a>
+                <a href="https://www.google.com/search?q=Alien%203%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Space Invaders (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ntzNLiA9uUixBhF5C9TSNxF4O0tEC7YQ" download>Download</a>
+                <a href="https://www.google.com/search?q=Space%20Invaders%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Sid Meier's Civilization (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1TfsUrhYQn7vm8uRJXAVPiPoDIVeUBA6Z" download>Download</a>
+                <a href="https://www.google.com/search?q=Sid%20Meier's%20Civilization%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">SimCity 2000 - The Ultimate City Simulator (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1kBB2ANUbRjv0tNlim6mwsafp6mqquIDj" download>Download</a>
+                <a href="https://www.google.com/search?q=SimCity%202000%20-%20The%20Ultimate%20City%20Simulator%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fight (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1aUDIVT11blpga7iSBYlPXEQCSBbiUGUD" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fight%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Frogger (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ELf0vUlG7oXF53X5IvJ5L3dJT3Sg9xI_" download>Download</a>
+                <a href="https://www.google.com/search?q=Frogger%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Ogre Battle - The March of the Black Queen (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1__dYCAjmRSfYYUKtC2AVCn23sBIWWeEe" download>Download</a>
+                <a href="https://www.google.com/search?q=Ogre%20Battle%20-%20The%20March%20of%20the%20Black%20Queen%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Ninja Gaiden Trilogy (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1MKHqZEOVmtsMDuB1xGu2bvL-lAjSrL9B" download>Download</a>
+                <a href="https://www.google.com/search?q=Ninja%20Gaiden%20Trilogy%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">SimCity (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1gfLeoi55ZSfnjS78MvuGIP68-h8nix0q" download>Download</a>
+                <a href="https://www.google.com/search?q=SimCity%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Simpsons, The - Bart's Nightmare (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1rA9ci3w7-xJuQwUKk-l8YCn58HrGwSVh" download>Download</a>
+                <a href="https://www.google.com/search?q=Simpsons%2C%20The%20-%20Bart's%20Nightmare%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Demon's Crest (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1yJq8Me7ar92VCnXqpSWX6Cj88iRMLo1Z" download>Download</a>
+                <a href="https://www.google.com/search?q=Demon's%20Crest%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Spider-Man - X-Men - Arcade's Revenge (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1XnjxNXf_EThs_Dl8QI5l64EKbujp13DY" download>Download</a>
+                <a href="https://www.google.com/search?q=Spider-Man%20-%20X-Men%20-%20Arcade's%20Revenge%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario World (Europe) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1b-_UU-RHY4ROLEbYj_b4wYW_FydhGcyD" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20World%20(Europe)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Top Gear 2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1NLQOCbA0gwSvCzJU3UbitaiWwqUL80JS" download>Download</a>
+                <a href="https://www.google.com/search?q=Top%20Gear%202%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Battletoads in Battlemaniacs (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=14BnSfcoiogOFXaOvHLpvM5CjsO8chiUv" download>Download</a>
+                <a href="https://www.google.com/search?q=Battletoads%20in%20Battlemaniacs%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Spider-Man (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1IhIhwRkKRYfSFUSPMXrp6YyhccMIPFPB" download>Download</a>
+                <a href="https://www.google.com/search?q=Spider-Man%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Seiken Densetsu 3 (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=13d3uRjwNjQCLGhd1UePxozvsO-kW1Cys" download>Download</a>
+                <a href="https://www.google.com/search?q=Seiken%20Densetsu%203%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pocky & Rocky 2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1pdpFiPooDZTfonYRnmInQfWaUntyR6_8" download>Download</a>
+                <a href="https://www.google.com/search?q=Pocky%20%26%20Rocky%202%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">NHL 96 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=17OBWOF8_ywfoOw0CSzPtaDTwgB81okMT" download>Download</a>
+                <a href="https://www.google.com/search?q=NHL%2096%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Dragon Quest V - Tenkuu no Hanayome (Japan).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1kSNEQr3NVgfXaUop48iCFqY4gEebiAy2" download>Download</a>
+                <a href="https://www.google.com/search?q=Dragon%20Quest%20V%20-%20Tenkuu%20no%20Hanayome%20(Japan).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Rockman & Forte (Japan).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1RhaQwKTICtwIlJKDew8UxpnMTk0RbN_N" download>Download</a>
+                <a href="https://www.google.com/search?q=Rockman%20%26%20Forte%20(Japan).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Star Ocean (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Di6-DnX4upghXgbbk83uyQKL-p6SmYaR" download>Download</a>
+                <a href="https://www.google.com/search?q=Star%20Ocean%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Breath of Fire II (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1s1efh9ffx3I_krLzTDydTkV1MfiTrmam" download>Download</a>
+                <a href="https://www.google.com/search?q=Breath%20of%20Fire%20II%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mighty Morphin Power Rangers (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Bqe29-2qKeE2eS6EwAy905WihF_ZwwAL" download>Download</a>
+                <a href="https://www.google.com/search?q=Mighty%20Morphin%20Power%20Rangers%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Star Wars - The Empire Strikes Back (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1xM2LuaukUZFaW93agmOml0iQ-E_cfM40" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Star%20Wars%20-%20The%20Empire%20Strikes%20Back%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Batman Returns (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1yDYFX-2mRDJXLLUg3yY1-TspAG5bMGjl" download>Download</a>
+                <a href="https://www.google.com/search?q=Batman%20Returns%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Lufia II - Rise of the Sinistrals (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1cG4Vjx53qb6hGcg9VLx6x30gY2Uq0Szq" download>Download</a>
+                <a href="https://www.google.com/search?q=Lufia%20II%20-%20Rise%20of%20the%20Sinistrals%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fight 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1zMyAuDjDZt-UJdwkc9QBHGwx1kuQinV8" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fight%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Star Wars - Return of the Jedi (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1c0FdjzbXbg_uFDI2RF9hkIfQeKGAn7F8" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Star%20Wars%20-%20Return%20of%20the%20Jedi%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Tetris Attack (USA) (En,Ja).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1yL1X-lgUS8J38Ko8GRT0santI5WD4Fj3" download>Download</a>
+                <a href="https://www.google.com/search?q=Tetris%20Attack%20(USA)%20(En%2CJa).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Tennis (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ar0ewMDZoCbWb1O7NQVm12GDSiSUS5G9" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Tennis%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fantasy - Mystic Quest (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=10wq67gUPREoKsFuncB8rLWNYVyX2fvDS" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fantasy%20-%20Mystic%20Quest%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Goof Troop (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1e1Gx3aWZiI15_kasMI1eNAQ7TwycF9Bz" download>Download</a>
+                <a href="https://www.google.com/search?q=Goof%20Troop%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Breath of Fire (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1wimWf254FGtrvuzBFoje5obalUupdFj3" download>Download</a>
+                <a href="https://www.google.com/search?q=Breath%20of%20Fire%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Sunset Riders (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1vDYA-IxTsBRYx215GMpKl98y4ZOVpGmT" download>Download</a>
+                <a href="https://www.google.com/search?q=Sunset%20Riders%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Illusion of Gaia (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1OrAAiX39oMBPqIQyJhPoEme-OcOmRH_B" download>Download</a>
+                <a href="https://www.google.com/search?q=Illusion%20of%20Gaia%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Star Wars (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Y8gFFh7gPheYWvb8BkLIts-AkT6eUUxK" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Star%20Wars%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mario Paint (Japan, USA) (En).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1jPY2nGexML0_ayfHj3W9DHeRPDCPg8hL" download>Download</a>
+                <a href="https://www.google.com/search?q=Mario%20Paint%20(Japan%2C%20USA)%20(En).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Soul Blazer (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1WyOmaRgDc23E895eXtRS7MwWBE6cogNK" download>Download</a>
+                <a href="https://www.google.com/search?q=Soul%20Blazer%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Harvest Moon (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1W4nMyIZmhL6Y3cWAot1QzYXchMIoQW78" download>Download</a>
+                <a href="https://www.google.com/search?q=Harvest%20Moon%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Street Fighter Alpha 2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1CULJ0gclWsyGboJ4m5Bi89ibFseCE6VA" download>Download</a>
+                <a href="https://www.google.com/search?q=Street%20Fighter%20Alpha%202%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Lufia & the Fortress of Doom (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1sdjhRj6YGdkjolJPoCbqNK77O01HNz83" download>Download</a>
+                <a href="https://www.google.com/search?q=Lufia%20%26%20the%20Fortress%20of%20Doom%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Dragon Quest VI (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1A_h-TCG4UmMoN6glucCWn3trKzOeLoaE" download>Download</a>
+                <a href="https://www.google.com/search?q=Dragon%20Quest%20VI%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fantasy IV (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ov5r3ljOYbyW1WaL45k6TcpmNntBcmsC" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fantasy%20IV%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Ghouls 'N Ghosts (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=16YP97HhNQ7rgQEhxenrcdwysO5Uu5sDV" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Ghouls%20'N%20Ghosts%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Dragon Quest V (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1IVT2L58-DPnY3TIP9jONLgSIYCJBCI-2" download>Download</a>
+                <a href="https://www.google.com/search?q=Dragon%20Quest%20V%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Lion King, The (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1JpUG91MDt_1sTlI2jJTPHDEkMtFmLWTz" download>Download</a>
+                <a href="https://www.google.com/search?q=Lion%20King%2C%20The%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Doom (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Mp7QHrOUlSlqY7hCNAofQXCZ-q1D4RoT" download>Download</a>
+                <a href="https://www.google.com/search?q=Doom%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Tetris & Dr. Mario (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1vn1-AajqeOplBtr-U8kACb83iZnCGX_1" download>Download</a>
+                <a href="https://www.google.com/search?q=Tetris%20%26%20Dr.%20Mario%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Kirby's Avalanche (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1zHXm75dZPcx6ZdV0cV7xhMTZ4GVvDp8Q" download>Download</a>
+                <a href="https://www.google.com/search?q=Kirby's%20Avalanche%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Top Gear (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1bo1LuB6TW_-TCYiv1E7U494pu0gGbTZD" download>Download</a>
+                <a href="https://www.google.com/search?q=Top%20Gear%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Zombies Ate My Neighbors (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1OFAou5oZwm5--zEq0buQzNf4qu6BtNHT" download>Download</a>
+                <a href="https://www.google.com/search?q=Zombies%20Ate%20My%20Neighbors%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Spider-Man - Venom - Maximum Carnage (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1CP7En0QQmiTG6ZRFkqaW_SIAB7zCmn_p" download>Download</a>
+                <a href="https://www.google.com/search?q=Spider-Man%20-%20Venom%20-%20Maximum%20Carnage%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Earthworm Jim (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=18u2wTqRv1YCNzsxThkAqnm1S6q8stWF0" download>Download</a>
+                <a href="https://www.google.com/search?q=Earthworm%20Jim%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Star Fox 2 (USA, Europe) (Classic Mini, Switch Online).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1hpbDQ3XKtl3BrO6o8Ec_-V_bhmr9hGbp" download>Download</a>
+                <a href="https://www.google.com/search?q=Star%20Fox%202%20(USA%2C%20Europe)%20(Classic%20Mini%2C%20Switch%20Online).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mega Man 7 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1EHFS-aQW7hK-z2B0N5Gj15-6c2cXA8xc" download>Download</a>
+                <a href="https://www.google.com/search?q=Mega%20Man%207%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fantasy V (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1E1et8GWSWtzXo10MU5X2IoyagJOAbdPp" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fantasy%20V%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Dragon Quest III (tr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1jo581fuHgx0D6jxS3v2JD-JPsariNDzo" download>Download</a>
+                <a href="https://www.google.com/search?q=Dragon%20Quest%20III%20(tr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Dragon Ball Z - Legend of the Super Saiyan (tr2).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1gJEysXCStHbmj6Ba_Fo8zrGkBk32N8DF" download>Download</a>
+                <a href="https://www.google.com/search?q=Dragon%20Ball%20Z%20-%20Legend%20of%20the%20Super%20Saiyan%20(tr2).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mortal Kombat (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1VFRXb61eSWKZYDKwyWirWrCm1FP8C2C_" download>Download</a>
+                <a href="https://www.google.com/search?q=Mortal%20Kombat%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Street Fighter II (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1sV6c_U44gxYPCTwRXmNqNHNf8gqDfNKF" download>Download</a>
+                <a href="https://www.google.com/search?q=Street%20Fighter%20II%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Bomberman (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1KGnUh_DNBbEdxCNH7AiZMsmJRQKAUaaG" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Bomberman%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mortal Kombat 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1xfB6m3U8Dq2YykeolD7Nv6GLsdlqM6jn" download>Download</a>
+                <a href="https://www.google.com/search?q=Mortal%20Kombat%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">X-Men - Mutant Apocalypse (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1MZbpuQTlTowwWNv-TyC024Tbxn3grPyY" download>Download</a>
+                <a href="https://www.google.com/search?q=X-Men%20-%20Mutant%20Apocalypse%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Kirby's Dream Course (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1uVxCVINWgy85AnKGST2qfBO5gHmynsRL" download>Download</a>
+                <a href="https://www.google.com/search?q=Kirby's%20Dream%20Course%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Tales of Phantasia (tr2).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1IACJwdK57Nczkc5xs_ENkmU7T--xWXST" download>Download</a>
+                <a href="https://www.google.com/search?q=Tales%20of%20Phantasia%20(tr2).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Street Fighter II Turbo (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1d0bHuQczi6Q0MshGUzUaX_dEA2IzDB_D" download>Download</a>
+                <a href="https://www.google.com/search?q=Street%20Fighter%20II%20Turbo%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mortal Kombat II (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Upg1ams5285sV_Uw7v_NneFU8CHEYfSq" download>Download</a>
+                <a href="https://www.google.com/search?q=Mortal%20Kombat%20II%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mega Man X3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=17aTuZeA1Xl6A21emX1w7kcNKA1Q3OZVu" download>Download</a>
+                <a href="https://www.google.com/search?q=Mega%20Man%20X3%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mega Man X2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1H8-Ew-Ioy1l0xWYoLdzYJOcAzLVuf0WV" download>Download</a>
+                <a href="https://www.google.com/search?q=Mega%20Man%20X2%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Contra III - The Alien Wars (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=17UgQhJUp04pXB8xpfGKECaZTdu_NA6DP" download>Download</a>
+                <a href="https://www.google.com/search?q=Contra%20III%20-%20The%20Alien%20Wars%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Punch-Out!! (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ut-NiLFh0uEa4tUQLtlZBaAvMjw2sg4u" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Punch-Out!!%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Aladdin (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=16IeSQj39zrPjSGbpehDdVhjk_ArQnZo1" download>Download</a>
+                <a href="https://www.google.com/search?q=Aladdin%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">F-Zero (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=19k64RgZZOfN4wD9LsnCMPfDlisBX8gS3" download>Download</a>
+                <a href="https://www.google.com/search?q=F-Zero%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fantasy II (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1c3Wv5aYXBmmOBy2PPJ927QLCzhIXk9GH" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fantasy%20II%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Bomberman 2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1RACS8BjlKkVoAbGHo3Cn7kP11kv7aiec" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Bomberman%202%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Killer Instinct (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1y5V5Wf5238QgLog-l1QKg8LccB70tLCt" download>Download</a>
+                <a href="https://www.google.com/search?q=Killer%20Instinct%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Teenage Mutant Ninja Turtles IV - Turtles in Time (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=15LZki-zgAWbqezb76j-YkwI3nGpuriZ0" download>Download</a>
+                <a href="https://www.google.com/search?q=Teenage%20Mutant%20Ninja%20Turtles%20IV%20-%20Turtles%20in%20Time%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Castlevania - Dracula X (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=19j1Z-KfsDo88Mm3dIOd3dgR4kxlIMvdc" download>Download</a>
+                <a href="https://www.google.com/search?q=Castlevania%20-%20Dracula%20X%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Kirby's Dream Land 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=15kwcG_hQXFdeUaj3JYDV_xDOkSzpZEQa" download>Download</a>
+                <a href="https://www.google.com/search?q=Kirby's%20Dream%20Land%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Secret of Mana (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=13u5o67h2MEG6UA9NuFSzFGzwBcrNGLnP" download>Download</a>
+                <a href="https://www.google.com/search?q=Secret%20of%20Mana%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Castlevania IV (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1fpLcR5bF8QeviNnHNaXCX8Xsxzb_eSAH" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Castlevania%20IV%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Ultimate Mortal Kombat 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1jDuiiJuB0q3GLCexrD2kB2YQsgL_tGZa" download>Download</a>
+                <a href="https://www.google.com/search?q=Ultimate%20Mortal%20Kombat%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Kirby Super Star (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=136T3CXB7k1AmchNHkUkiKwcVABYyTIa2" download>Download</a>
+                <a href="https://www.google.com/search?q=Kirby%20Super%20Star%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario All-Stars + Super Mario World (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Z-68Xf2G2y7sSn4JoszBHPckIL79GVgy" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20All-Stars%20%2B%20Super%20Mario%20World%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Street Fighter II (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1BOiZsS1fiPC_0txfB_jjEZ8OgdW1l0Dk" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Street%20Fighter%20II%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Star Fox (USA) (Rev 2).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1tw2SEve3uPbNQyr8-Z5zWNWZ5mPA1UAr" download>Download</a>
+                <a href="https://www.google.com/search?q=Star%20Fox%20(USA)%20(Rev%202).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Final Fantasy III (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Y8IHMAh__WY3Wh4538WEMoPu3ItGCS_1" download>Download</a>
+                <a href="https://www.google.com/search?q=Final%20Fantasy%20III%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Donkey Kong Country 3 - Dixie Kong's Double Trouble! (USA) (En,Fr).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=18YrY47ImlXWS_i72NUT5vEhEDORUUxRS" download>Download</a>
+                <a href="https://www.google.com/search?q=Donkey%20Kong%20Country%203%20-%20Dixie%20Kong's%20Double%20Trouble!%20(USA)%20(En%2CFr).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario All-Stars (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1L916nRy5-ZKE5qjaNCmGsujy9X-l72Iu" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20All-Stars%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario RPG - Legend of the Seven Stars (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1Syo7gPKJ4be0gYtEB-DSJHewbW3WmGBF" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20RPG%20-%20Legend%20of%20the%20Seven%20Stars%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mega Man X (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1CjlYSVo8EvE1MPz5H2v70n-9daZaIstO" download>Download</a>
+                <a href="https://www.google.com/search?q=Mega%20Man%20X%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Donkey Kong Country 2 - Diddy's Kong Quest (USA) (En,Fr) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1kvoNdqa54dGgPEIh8dtoGNVgdOLw_M_1" download>Download</a>
+                <a href="https://www.google.com/search?q=Donkey%20Kong%20Country%202%20-%20Diddy's%20Kong%20Quest%20(USA)%20(En%2CFr)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario Kart (USA) (1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1xR2OEPedoYIt92F6977t-LbUKuNBHAm0" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20Kart%20(USA)%20(1).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario Kart (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1OoaAa_VQLJtfslcSG760pc3thpWinlIV" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20Kart%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">EarthBound (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1oqWvrWagYrnH42lC6aHJkkPXBklbRT7S" download>Download</a>
+                <a href="https://www.google.com/search?q=EarthBound%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Metroid (Japan, USA) (En,Ja).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1SsKQUBz_VI-9P7TSW4kdbZPWH3RQvyXM" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Metroid%20(Japan%2C%20USA)%20(En%2CJa).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario World 2 - Yoshi's Island (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1NkRVXKBPQexBWQX-x-3f9LdZX9oSxFCN" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20World%202%20-%20Yoshi's%20Island%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Chrono Trigger (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1OmCb6FRjPOSHaxpKLWPEVheBaWZrFM7Z" download>Download</a>
+                <a href="https://www.google.com/search?q=Chrono%20Trigger%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Legend of Zelda, The - A Link to the Past (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1qw4wo-Frv-RtdZDtLrUSo6Smo0Aal3UE" download>Download</a>
+                <a href="https://www.google.com/search?q=Legend%20of%20Zelda%2C%20The%20-%20A%20Link%20to%20the%20Past%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Donkey Kong Country (USA) (Rev 2).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1M-Lye2TQHgqRRG5F55xcHBNBwWTspzY5" download>Download</a>
+                <a href="https://www.google.com/search?q=Donkey%20Kong%20Country%20(USA)%20(Rev%202).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Super Mario World (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1KSjqGF5IovQ81AIaLFjw-LVL7wnRK9kE" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20World%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          </ul>
+
+        <!-- Iframe incorporando a pasta do Google Drive -->
+        </div>
+    </div>
+  </div>
+  
+  <footer>
+    &copy; 2025 Rysheet Depository <br/>
+    preserving the past for the future
+  </footer>
+
+  <script>
+    function filtrarJogos() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const lista = document.querySelectorAll(".game-list .game-item");
+    
+      lista.forEach(item => {
+        const titulo = item.querySelector(".game-title").textContent.toLowerCase();
+        item.style.display = titulo.includes(filter) ? "block" : "none";
+      });
+    }
+    </script>
+    
+
+</body>
+</html>
