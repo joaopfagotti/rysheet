@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Rysheet Depository - preserving the past for the future.">
+  <meta name="author" content="Rysheet">
+  <title>Rysheet Depository - [Console Name]</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="/../images/logo.png" type="image/x-icon">
+  <!-- Bootstrap CSS se necessário -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <style>
+    /* Estilos Gerais */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow-x: hidden; }
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: linear-gradient(to bottom, #0b0f1a, #1a1a2e);
+      color: #cdd8e4;
+      display: flex; flex-direction: column;
+    }
+    a { text-decoration: none; color: #cdd8e4; transition: color 0.3s; }
+    a:hover { color: #ff00ff; }
+    
+    header {
+      background: #102233 url('https://www.transparenttextures.com/patterns/small-grid.png') repeat;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 4px double #ff00ff;
+      box-shadow: 0 0 12px #00ffff;
+      background-image: url(images/wallpaper.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    header h1 { font-size: 2.5rem; color: #00ffff; text-shadow: 0 0 10px #ff00ff; }
+    header h2 { font-size: 1rem; color: #44ffff; margin-top: 5px; opacity: 0.8; text-shadow: 0 0 10px #ff00ff; }
+    
+    .navbar {
+      background: linear-gradient(45deg, #2b2d31, #1c3c5a);
+      padding: 10px; border-bottom: 3px groove #ff00ff;
+      box-shadow: inset 0 -3px 10px #000, 0 3px 5px #00ffff;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+    }
+    .navbar a {
+      padding: 6px 10px; font-size: 0.65rem;
+      background-color: #1a1a2e; border: 2px dashed #ff00ff;
+      box-shadow: 2px 2px 4px #00ffff; white-space: nowrap;
+    }
+    .navbar a:hover { color: #ff00ff; background-color: #00ffff; border: 2px dashed #00ffff; }
+    
+    .main-container {
+      flex: 1; display: flex; justify-content: center;
+      margin: 20px auto; padding: 0 10px;
+    }
+    
+    /* Inner container para o conteúdo central */
+    .inner-container {
+      position: relative; display: flex; flex-direction: column;
+      max-width: 980px; width: 100%; gap: 10px;
+      padding: 20px; background: transparent; z-index: 1;
+    }
+    .inner-container::before {
+      content: "";
+      position: absolute; top: 0; bottom: 0; left: -40px; right: -40px;
+      background: #2b2d31 url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      border: 3px ridge #ff00ff;
+      box-shadow: 0 0 15px rgba(0,191,255,0.5);
+      z-index: -1; border-radius: 4px;
+    }
+    
+    .center-column {
+      background: #1a1a2e; padding: 15px;
+      border: 3px inset #ff00ff; box-shadow: inset 0 0 10px #00ffff;
+    }
+    
+    h2.page-title {
+      font-size: 1.2rem; color: #ff00ff;
+      text-shadow: 0 0 5px #00ffff; margin-bottom: 12px;
+    }
+    
+    
+    footer {
+      text-align: center; background: #2b2d31; padding: 20px;
+      border-top: 4px double #ff00ff; box-shadow: 0 -3px 8px #00ffff;
+      font-size: 0.7rem; margin-top: auto;
+    }
+
+    .classified-title {
+      font-size: 1rem;
+      color: #00ffff;
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed #ff00ff;
+    }
+
+    .game-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .game-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #1a1a2e, #222237);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #00ffff55;
+      transition: transform 0.2s;
+    }
+
+    .game-title {
+      font-size: 0.7rem;
+      color: #ffffff;
+    }
+
+    .button-group a {
+      text-decoration: none;
+      font-size: 0.6rem;
+      padding: 8px 12px;
+      margin-left: 8px;
+      border-radius: 5px;
+      border: 2px solid #008cff;
+      background: linear-gradient(1deg, #1d3c92, #2ee0ff);
+      color: #000;
+      transition: 0.01s ease;
+    }
+
+    .button-group a:hover {
+      background-color: #297fff;
+      border-color: #7cdaff;
+      color: #fff;
+    }
+
+    .search-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 6px 20px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  background: linear-gradient(1deg, #49eaff, #4983ff);
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: #5c9eff;
+  box-shadow: 0 0 12px rgba(92, 158, 255, 0.6);
+  background: #45caff;
+}
+
+    
+@media (max-width: 768px) {
+      /* Navbar: links em horizontal com scroll se necessário */
+      .navbar {
+        display: block;
+        text-align: center;
+        padding: 10px 0;
+      }
+      .navbar a {
+        display: block;
+        padding: 8px 0;
+        margin: 0;
+        text-decoration: none;
+      }
+      /* Empilhando as colunas */
+      .inner-container {
+        display: block; 
+        padding: 0 0px;
+      }
+      .left-column,
+      .center-column,
+      .right-column {
+        width: 100%;
+        float: none;
+        margin-bottom: 20px;
+        padding: 0 -5px;
+      }
+
+      /* Redução de tamanho das fontes para melhor visualização em mobile */
+      body, header, .main-container, h2, h3, h4, h6, p, a {
+        font-size: 0.9em;
+      }
+      
+      /* Ajustes específicos no header para reduzir espaçamento */
+      header {
+        padding: 20px 10px;
+        background-size: cover;
+        background-position: center;
+        font-size: 5%;
+      }
+
+      header h1 {
+        font-size: 32px;
+      }
+      
+      /* Se desejar reduzir o espaçamento interno dos blocos de artigos */
+      .article-block {
+        padding: 1%;
+        width: 85%;
+      }
+
+      .button-group a {
+      display: block;
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      margin-left: 8px;
+      border-radius: 5px;
+      border: 2px solid #008cff;
+      background: linear-gradient(1deg, #1d3c92, #2ee0ff);
+      color: #000;
+      transition: 0.01s ease;
+      }
+
+      .game-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #1a1a2e, #222237);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #00ffff55;
+      transition: transform 0.2s;
+    }
+
+    .game-title {
+      font-size: 0.6rem;
+      color: #ffffff;
+      max-width: 10%;
+      flex: auto;
+      flex-wrap: nowrap;
+
+    }
+
+    }
+    
+  </style>
+</head>
+<body>
+
+  <header style="background-image: url(../images/wallpaper.jpg); background-size: cover; background-position: center;">
+    <h1>Rysheet Depository</h1>
+    <h2>preserving the past for the future</h2>
+  </header>
+  
+  <div class="navbar">
+    <a href="../index.htm">Home</a>
+    <a href="https://rysheet.blogspot.com/" target="_blank">Blogspot</a>
+    <a href="../about.htm">About Us</a>
+    <a href="../acervo.htm">Acervo</a>
+    <a href="../contact.htm">Contact</a>
+  </div>
+  
+  <div class="main-container">
+    <div class="inner-container">
+      <div class="center-column">
+        <h2 class="page-title">GENESIS - Acervo</h2>
+        <p>Esta página lista os jogos disponíveis para o console <strong>GENESIS</strong> diretamente a partir do Google Drive. Clique para baixar.</p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Digite aqui o nome do jogo" onkeyup="filtrarJogos()">
+          </div>
+          
+          <ul class="game-list">
+
+            <li class="game-item">
+              <span class="game-title">Fatal Fury (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1zGQIqgjuEhHUvlf1qfLXQSo-8M88hFCl" download>Download</a>
+                <a href="https://www.google.com/search?q=Fatal%20Fury%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Frogger (USA) (Rev 1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=13YcspIpAGSK5rUpcerN1xMdhxHyGfopO" download>Download</a>
+                <a href="https://www.google.com/search?q=Frogger%20(USA)%20(Rev%201).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">FIFA Soccer 97 (USA, Europe) (En,Fr,De,Es,It,Sv).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1g1SihPw8M3gylLvkWIfshQAQsrCLmj3I" download>Download</a>
+                <a href="https://www.google.com/search?q=FIFA%20Soccer%2097%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">FIFA Soccer 96 (USA, Europe) (En,Fr,De,Es,It,Sv).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1qpppDZE1XMAbqogk_uyBatho37JF6aDa" download>Download</a>
+                <a href="https://www.google.com/search?q=FIFA%20Soccer%2096%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt%2CSv).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">FIFA Soccer 95 (USA, Europe) (En,Fr,De,Es).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ukiOpkh9_ECUBHzmvn3OmG3JYTqEPNJQ" download>Download</a>
+                <a href="https://www.google.com/search?q=FIFA%20Soccer%2095%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Dungeons & Dragons - Warriors of the Eternal Sun (USA, Europe).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1shkFnRTXiZDgEWT2GdOpPDIfMyoInWxv" download>Download</a>
+                <a href="https://www.google.com/search?q=Dungeons%20%26%20Dragons%20-%20Warriors%20of%20the%20Eternal%20Sun%20(USA%2C%20Europe).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Ghouls'n Ghosts (Japan, USA) (En).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1pizEAUTB_rruRM1CMne9SpnGPqSQRGxQ" download>Download</a>
+                <a href="https://www.google.com/search?q=Ghouls'n%20Ghosts%20(Japan%2C%20USA)%20(En).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mega Bomberman (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1C2EZtH8n2bHc8_4jCrHryZGYrtqUQtqK" download>Download</a>
+                <a href="https://www.google.com/search?q=Mega%20Bomberman%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Ghostbusters (USA, Europe).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1zGwpqFWejRf7uSkEEPd0opRorZkGS5sJ" download>Download</a>
+                <a href="https://www.google.com/search?q=Ghostbusters%20(USA%2C%20Europe).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Batman - The Video Game (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1gM39UfPL3ZeCzOFLMis2UnVqt2n_CWed" download>Download</a>
+                <a href="https://www.google.com/search?q=Batman%20-%20The%20Video%20Game%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Toy Story (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1v0g9ajN6mPe0HNRWJwpiB4OGTHGQkq9X" download>Download</a>
+                <a href="https://www.google.com/search?q=Toy%20Story%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Spider-Man . Venom - Maximum Carnage (World).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1zeCSmaSSPXA9YvzxgG6CYL1ZzxTgZhe3" download>Download</a>
+                <a href="https://www.google.com/search?q=Spider-Man%20.%20Venom%20-%20Maximum%20Carnage%20(World).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Jurassic Park (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1kpN5HW3lLjnqbbRAS_l3BCIWx2iq_XI1" download>Download</a>
+                <a href="https://www.google.com/search?q=Jurassic%20Park%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mortal Kombat 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=19gTPW6UQ2eoDEheFZxKJQSSpenD-wOsr" download>Download</a>
+                <a href="https://www.google.com/search?q=Mortal%20Kombat%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Battletoads (World).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1BCcCGebBvs78ocMh4-7fsL6rCZ61wMUO" download>Download</a>
+                <a href="https://www.google.com/search?q=Battletoads%20(World).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Teenage Mutant Ninja Turtles - The Hyperstone Heist (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1ugfQFg3sdSRjIf2guK3uFy8H8VIJSasY" download>Download</a>
+                <a href="https://www.google.com/search?q=Teenage%20Mutant%20Ninja%20Turtles%20-%20The%20Hyperstone%20Heist%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Earthworm Jim 2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1fjUGQFz9tCfnBhLfrHUQVJ2Q7wjIB9OR" download>Download</a>
+                <a href="https://www.google.com/search?q=Earthworm%20Jim%202%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Castle of Illusion Starring Mickey Mouse (USA, Europe).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1HfH4aOpSZADz_E2XtgbFMRnI-HqMdEAa" download>Download</a>
+                <a href="https://www.google.com/search?q=Castle%20of%20Illusion%20Starring%20Mickey%20Mouse%20(USA%2C%20Europe).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Sonic Spinball (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1xomYJU8Vf0Slx4jzKNzdY11mJVV6k_mb" download>Download</a>
+                <a href="https://www.google.com/search?q=Sonic%20Spinball%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Contra - Hard Corps (USA, Korea) (En).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1aSC9U7nTjLDx1UiszeKJJ5Gs8NSvFHy5" download>Download</a>
+                <a href="https://www.google.com/search?q=Contra%20-%20Hard%20Corps%20(USA%2C%20Korea)%20(En).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mortal Kombat II (World).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1FFQxATENS-63qSnJqkn4wWZyZ6oBRM5I" download>Download</a>
+                <a href="https://www.google.com/search?q=Mortal%20Kombat%20II%20(World).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">X-Men 2 - Clone Wars (USA, Europe).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=10b4sG7AIMiBaAbyf8iPvx7KEB7IyHpVU" download>Download</a>
+                <a href="https://www.google.com/search?q=X-Men%202%20-%20Clone%20Wars%20(USA%2C%20Europe).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Streets of Rage 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1NBBF52Ezfsw9TvBkNDzLB56-a_CXpGse" download>Download</a>
+                <a href="https://www.google.com/search?q=Streets%20of%20Rage%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Mortal Kombat (World).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=11RKJPIFxPXzu1cfw8XCjvsthxlgZk0HY" download>Download</a>
+                <a href="https://www.google.com/search?q=Mortal%20Kombat%20(World).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Aladdin (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1WORZxsv0KvfUQvUTfl-5OA06t25lAyCz" download>Download</a>
+                <a href="https://www.google.com/search?q=Aladdin%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Earthworm Jim (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1jHi8AfjjSeqA1Pc1CXuG-qPls6nkad0C" download>Download</a>
+                <a href="https://www.google.com/search?q=Earthworm%20Jim%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Shinobi III - Return of the Ninja Master (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1oVYBQq9Q0Vq301avsHLvyZ785oqHg2UU" download>Download</a>
+                <a href="https://www.google.com/search?q=Shinobi%20III%20-%20Return%20of%20the%20Ninja%20Master%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Ultimate Mortal Kombat 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1cDow3dL0auPulvKneVHSCdEzbSlD3SHX" download>Download</a>
+                <a href="https://www.google.com/search?q=Ultimate%20Mortal%20Kombat%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">X-Men (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1RdUgfdstCExLXJBiXJqOTdRN0YWyKQNI" download>Download</a>
+                <a href="https://www.google.com/search?q=X-Men%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Castlevania - Bloodlines (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1G7wNjuS49laExNkMtBrf69vOD0h-6oNc" download>Download</a>
+                <a href="https://www.google.com/search?q=Castlevania%20-%20Bloodlines%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Streets of Rage 2 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=14Id3HXQS6xmWLW9aStIo169LQKvE94yi" download>Download</a>
+                <a href="https://www.google.com/search?q=Streets%20of%20Rage%202%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Sonic The Hedgehog 3 (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=10qENN06dt403TXEXEZgOIAX2fjaks_ce" download>Download</a>
+                <a href="https://www.google.com/search?q=Sonic%20The%20Hedgehog%203%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Sonic The Hedgehog 2 (World) (Rev B).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1GHP1DdDb72vwR5Hzg-qnWRV3T3gyqfyQ" download>Download</a>
+                <a href="https://www.google.com/search?q=Sonic%20The%20Hedgehog%202%20(World)%20(Rev%20B).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Sonic The Hedgehog (USA, Europe).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1SDiel2d0iecyBJHN68mplSK8ahh54M3T" download>Download</a>
+                <a href="https://www.google.com/search?q=Sonic%20The%20Hedgehog%20(USA%2C%20Europe).zip" target="_blank">View</a>
+              </div>
+            </li>
+          </ul>
+
+        <!-- Iframe incorporando a pasta do Google Drive -->
+        </div>
+    </div>
+  </div>
+  
+  <footer>
+    &copy; 2025 Rysheet Depository <br/>
+    preserving the past for the future
+  </footer>
+
+  <script>
+    function filtrarJogos() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const lista = document.querySelectorAll(".game-list .game-item");
+    
+      lista.forEach(item => {
+        const titulo = item.querySelector(".game-title").textContent.toLowerCase();
+        item.style.display = titulo.includes(filter) ? "block" : "none";
+      });
+    }
+    </script>
+    
+
+</body>
+</html>
