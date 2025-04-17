@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Rysheet Depository - preserving the past for the future.">
+  <meta name="author" content="Rysheet">
+  <title>Rysheet Depository - [Console Name]</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"/>
+  <link rel="icon" href="/../images/logo.png" type="image/x-icon">
+  <!-- Bootstrap CSS se necessário -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <style>
+    /* Estilos Gerais */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow-x: hidden; }
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: linear-gradient(to bottom, #0b0f1a, #1a1a2e);
+      color: #cdd8e4;
+      display: flex; flex-direction: column;
+    }
+    a { text-decoration: none; color: #cdd8e4; transition: color 0.3s; }
+    a:hover { color: #ff00ff; }
+    
+    header {
+      background: #102233 url('https://www.transparenttextures.com/patterns/small-grid.png') repeat;
+      text-align: center;
+      padding: 20px 0;
+      border-bottom: 4px double #ff00ff;
+      box-shadow: 0 0 12px #00ffff;
+      background-image: url(images/wallpaper.jpg);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+    }
+    header h1 { font-size: 2.5rem; color: #00ffff; text-shadow: 0 0 10px #ff00ff; }
+    header h2 { font-size: 1rem; color: #44ffff; margin-top: 5px; opacity: 0.8; text-shadow: 0 0 10px #ff00ff; }
+    
+    .navbar {
+      background: linear-gradient(45deg, #2b2d31, #1c3c5a);
+      padding: 10px; border-bottom: 3px groove #ff00ff;
+      box-shadow: inset 0 -3px 10px #000, 0 3px 5px #00ffff;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 6px;
+    }
+    .navbar a {
+      padding: 6px 10px; font-size: 0.65rem;
+      background-color: #1a1a2e; border: 2px dashed #ff00ff;
+      box-shadow: 2px 2px 4px #00ffff; white-space: nowrap;
+    }
+    .navbar a:hover { color: #ff00ff; background-color: #00ffff; border: 2px dashed #00ffff; }
+    
+    .main-container {
+      flex: 1; display: flex; justify-content: center;
+      margin: 20px auto; padding: 0 10px;
+    }
+    
+    /* Inner container para o conteúdo central */
+    .inner-container {
+      position: relative; display: flex; flex-direction: column;
+      max-width: 980px; width: 100%; gap: 10px;
+      padding: 20px; background: transparent; z-index: 1;
+    }
+    .inner-container::before {
+      content: "";
+      position: absolute; top: 0; bottom: 0; left: -40px; right: -40px;
+      background: #2b2d31 url('https://www.transparenttextures.com/patterns/asfalt-light.png');
+      border: 3px ridge #ff00ff;
+      box-shadow: 0 0 15px rgba(0,191,255,0.5);
+      z-index: -1; border-radius: 4px;
+    }
+    
+    .center-column {
+      background: #1a1a2e; padding: 15px;
+      border: 3px inset #ff00ff; box-shadow: inset 0 0 10px #00ffff;
+    }
+    
+    h2.page-title {
+      font-size: 1.2rem; color: #ff00ff;
+      text-shadow: 0 0 5px #00ffff; margin-bottom: 12px;
+    }
+    
+    
+    footer {
+      text-align: center; background: #2b2d31; padding: 20px;
+      border-top: 4px double #ff00ff; box-shadow: 0 -3px 8px #00ffff;
+      font-size: 0.7rem; margin-top: auto;
+    }
+
+    .classified-title {
+      font-size: 1rem;
+      color: #00ffff;
+      text-align: center;
+      margin-bottom: 30px;
+      padding-bottom: 10px;
+      border-bottom: 2px dashed #ff00ff;
+    }
+
+    .game-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .game-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #1a1a2e, #222237);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #00ffff55;
+      transition: transform 0.2s;
+    }
+
+    .game-title {
+      font-size: 0.7rem;
+      color: #ffffff;
+    }
+
+    .button-group a {
+      text-decoration: none;
+      font-size: 0.6rem;
+      padding: 8px 12px;
+      margin-left: 8px;
+      border-radius: 5px;
+      border: 2px solid #008cff;
+      background: linear-gradient(1deg, #1d3c92, #2ee0ff);
+      color: #000;
+      transition: 0.01s ease;
+    }
+
+    .button-group a:hover {
+      background-color: #297fff;
+      border-color: #7cdaff;
+      color: #fff;
+    }
+
+    .search-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 30px auto 20px auto;
+  display: flex;
+  justify-content: center;
+}
+
+#searchInput {
+  width: 100%;
+  padding: 6px 20px;
+  border-radius: 12px;
+  border: 1px solid #ccc;
+  font-size: 13px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  background: linear-gradient(1deg, #49eaff, #4983ff);
+}
+
+#searchInput:focus {
+  outline: none;
+  border-color: #5c9eff;
+  box-shadow: 0 0 12px rgba(92, 158, 255, 0.6);
+  background: #45caff;
+}
+
+    
+@media (max-width: 768px) {
+      /* Navbar: links em horizontal com scroll se necessário */
+      .navbar {
+        display: block;
+        text-align: center;
+        padding: 10px 0;
+      }
+      .navbar a {
+        display: block;
+        padding: 8px 0;
+        margin: 0;
+        text-decoration: none;
+      }
+      /* Empilhando as colunas */
+      .inner-container {
+        display: block; 
+        padding: 0 0px;
+      }
+      .left-column,
+      .center-column,
+      .right-column {
+        width: 100%;
+        float: none;
+        margin-bottom: 20px;
+        padding: 0 -5px;
+      }
+
+      /* Redução de tamanho das fontes para melhor visualização em mobile */
+      body, header, .main-container, h2, h3, h4, h6, p, a {
+        font-size: 0.9em;
+      }
+      
+      /* Ajustes específicos no header para reduzir espaçamento */
+      header {
+        padding: 20px 10px;
+        background-size: cover;
+        background-position: center;
+        font-size: 5%;
+      }
+
+      header h1 {
+        font-size: 32px;
+      }
+      
+      /* Se desejar reduzir o espaçamento interno dos blocos de artigos */
+      .article-block {
+        padding: 1%;
+        width: 85%;
+      }
+
+      .button-group a {
+      display: block;
+      text-decoration: none;
+      font-size: 0.8rem;
+      padding: 8px 12px;
+      margin-left: -18px;
+      border-radius: 5px;
+      border: 2px solid #008cff;
+      background: linear-gradient(1deg, #1d3c92, #2ee0ff);
+      color: #000;
+      transition: 0.01s ease;
+      }
+
+      .game-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: linear-gradient(90deg, #1a1a2e, #222237);
+      border: 2px solid #00ffff;
+      border-radius: 10px;
+      padding: 12px 20px;
+      margin-bottom: 15px;
+      box-shadow: 0 0 10px #00ffff55;
+      transition: transform 0.2s;
+    }
+
+    .game-title {
+      font-size: 0.6rem;
+      color: #ffffff;
+      max-width: 10%;
+      flex: auto;
+      flex-wrap: nowrap;
+
+    }
+
+    }
+    
+  </style>
+</head>
+<body>
+
+  <header style="background-image: url(../images/wallpaper.jpg); background-size: cover; background-position: center;">
+    <h1>Rysheet Depository</h1>
+    <h2>preserving the past for the future</h2>
+  </header>
+  
+  <div class="navbar">
+    <a href="../index.htm">Home</a>
+    <a href="https://rysheet.blogspot.com/" target="_blank">Blogspot</a>
+    <a href="../about.htm">About Us</a>
+    <a href="../acervo.htm">Acervo</a>
+    <a href="../contact.htm">Contact</a>
+  </div>
+  
+  <div class="main-container">
+    <div class="inner-container">
+      <div class="center-column">
+        <h2 class="page-title">GBA - Acervo</h2>
+        <p>Esta página lista os jogos disponíveis para o console <strong>GameBoyAdvance</strong> diretamente a partir do Google Drive. Clique para baixar.</p>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Digite aqui o nome do jogo" onkeyup="filtrarJogos()">
+          </div>
+          
+          <ul class="game-list">
+
+            <li class="game-item">
+              <span class="game-title">Super Mario Advance 4 - Super Mario Bros. 3 (U) (V1.1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-TVUYx0H-DOIxEwkmXzhMZxuYCKYOYUh" download>Download</a>
+                <a href="https://www.google.com/search?q=Super%20Mario%20Advance%204%20-%20Super%20Mario%20Bros.%203%20(U)%20(V1.1).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon Ultra Violet (1.22) LSA (Fire Red Hack).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-SdxfqDOZdSAlE0S9yfM-svfIL7Yh1Rt" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20Ultra%20Violet%20(1.22)%20LSA%20(Fire%20Red%20Hack).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Radical_Red_v4.1.zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-QQKtghWWCEeAcOcm4_ZF2lTEv1hUV3T" download>Download</a>
+                <a href="https://www.google.com/search?q=Radical_Red_v4.1.zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon - Sapphire Version (U) (V1.1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-M9nPjXCVIR3LVciQGlxcZRW_bqAX5IG" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20-%20Sapphire%20Version%20(U)%20(V1.1).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon Pinball - Ruby & Sapphire (USA).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-LdNB3ZnjyI11t6gKey-OUhFig17Mh0u" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20Pinball%20-%20Ruby%20%26%20Sapphire%20(USA).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon - Leaf Green Version (U) (V1.1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-JR_DXK0GX0sVcvw1-hJLqThuxgAAOHt" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20-%20Leaf%20Green%20Version%20(U)%20(V1.1).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon - Ruby Version (U) (V1.1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-Impls8yv8FK-2oRCtZX7EbjKRwiw4rs" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20-%20Ruby%20Version%20(U)%20(V1.1).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon - Emerald Version (U).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-F-hu-QO0w6jpkkmTqOJA4KfwVhsb6sg" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20-%20Emerald%20Version%20(U).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Pokemon - Fire Red Version (U) (V1.1).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-Bpel-gUPiy97-2NrJcWaUByfnxP8MGb" download>Download</a>
+                <a href="https://www.google.com/search?q=Pokemon%20-%20Fire%20Red%20Version%20(U)%20(V1.1).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Legend of Zelda, The - The Minish Cap (U).zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-8BTO7LLKGVpHmDnYzImqPYsHnxaWqhk" download>Download</a>
+                <a href="https://www.google.com/search?q=Legend%20of%20Zelda%2C%20The%20-%20The%20Minish%20Cap%20(U).zip" target="_blank">View</a>
+              </div>
+            </li>
+          
+            <li class="game-item">
+              <span class="game-title">Kirby - Nightmare in Dreamland (U) [!].zip</span>
+              <div class="button-group">
+                <a href="https://drive.google.com/uc?export=download&id=1-6hkkMB1qWiw1B3aAlcbJ2vpRbY8k3Jz" download>Download</a>
+                <a href="https://www.google.com/search?q=Kirby%20-%20Nightmare%20in%20Dreamland%20(U)%20%5B!%5D.zip" target="_blank">View</a>
+              </div>
+            </li>
+          </ul>
+          
+          
+
+        <!-- Iframe incorporando a pasta do Google Drive -->
+        </div>
+    </div>
+  </div>
+  
+  <footer>
+    &copy; 2025 Rysheet Depository <br/>
+    preserving the past for the future
+  </footer>
+
+  <script>
+    function filtrarJogos() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const lista = document.querySelectorAll(".game-list .game-item");
+    
+      lista.forEach(item => {
+        const titulo = item.querySelector(".game-title").textContent.toLowerCase();
+        item.style.display = titulo.includes(filter) ? "block" : "none";
+      });
+    }
+    </script>
+    
+
+</body>
+</html>
